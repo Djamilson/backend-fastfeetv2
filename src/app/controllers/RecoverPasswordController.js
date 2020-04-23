@@ -11,7 +11,7 @@ import Person from '../models/Person';
 class RecuperarPasswordController {
   async store(req, res) {
     const { email } = req.body;
-
+    console.log('req.body', req.body);
     const schema = Yup.object().shape({
       email: Yup.string()
         .email()
@@ -34,7 +34,7 @@ class RecuperarPasswordController {
       ],
     });
 
-    console.log('req.body', req.body);
+    console.log('user::: ', user );
 
     if (!user) {
       return res
@@ -65,7 +65,7 @@ class RecuperarPasswordController {
       user_id: user.id,
       expires: addDays(new Date(), 1),
     });
-  
+
     await Queue.add(RecoverPasswordAWS.key, {
       user: user.person,
       code_active,

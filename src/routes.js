@@ -80,7 +80,6 @@ routes.put('/forget/new_password', UserMobilController.update);
 
 routes.get('/test', TesteController.index);
 
-
 routes.use(AuthMiddleware);
 
 /**
