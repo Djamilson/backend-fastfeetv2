@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import multer from 'multer';
 import multerConfig from './config/multer';
+import AuthMiddleware from './app/middlewares/auth';
 
 import RecipientController from './app/controllers/RecipientController';
 import AddressController from './app/controllers/AddressController';
@@ -20,7 +21,6 @@ import ProblemController from './app/controllers/ProblemController';
 import SessionController from './app/controllers/SessionController';
 import FileController from './app/controllers/FileController';
 import UserAvatarUpdateController from './app/controllers/UserAvatarUpdateController';
-import AuthMiddleware from './app/middlewares/auth';
 
 import GroupController from './app/controllers/GroupController';
 import GroupUserController from './app/controllers/GroupUserController';
@@ -80,7 +80,7 @@ routes.put('/forget/new_password', UserMobilController.update);
 
 routes.get('/test', TesteController.index);
 
-routes.use(AuthMiddleware);
+//routes.use(AuthMiddleware);
 
 /**
  * criar user
