@@ -79,8 +79,8 @@ routes.get('/mobile/forget_password', TokenController.index);
 routes.put('/forget/new_password', UserMobilController.update);
 
 routes.get('/test', TesteController.index);
-
-//routes.use(AuthMiddleware);
+//foi copiado
+routes.use(AuthMiddleware);
 
 /**
  * criar user
