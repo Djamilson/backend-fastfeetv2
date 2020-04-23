@@ -60,12 +60,13 @@ class SessionController {
       return res.status(403).json({ error: 'User not found' });
     }
     // Make sure the user has been verified
-    if (user && !user.is_verified) {
+
+    /* if (user && !user.is_verified) {
       return res.status(401).json({
         error:
           'Seu email ainda não foi validado, acesse sua conta de email e confirme a validação do acesso!',
       });
-    }
+    }*/
 
     // Make sure the user has been verified
     if (user && !user.person.status) {

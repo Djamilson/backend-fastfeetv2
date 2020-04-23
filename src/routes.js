@@ -81,7 +81,7 @@ routes.get('/test', TesteController.index);
 
 routes.post('/sessions', validateSessionStore, SessionController.store);
 
-//routes.use(AuthMiddleware);
+routes.use(AuthMiddleware);
 
 /**
  * criar user
