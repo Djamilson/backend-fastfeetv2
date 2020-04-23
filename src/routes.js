@@ -71,6 +71,7 @@ const upload = multer(multerConfig);
  *
  */
 
+routes.post('/sessions', validateSessionStore, SessionController.store);
 
 routes.put('/accept_regulation', AcceptRegulationController.update);
 routes.post('/forgetpassword/mobile', RecoverPasswordController.store);
@@ -79,7 +80,6 @@ routes.put('/forget/new_password', UserMobilController.update);
 
 routes.get('/test', TesteController.index);
 
-routes.post('/sessions', validateSessionStore, SessionController.store);
 
 routes.use(AuthMiddleware);
 
