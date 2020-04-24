@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 
 export default async (req, res, next) => {
-  console.log('Validaddd::', req.body);
+  
   try {
     const schema = Yup.object().shape({
       name: Yup.string().required(),

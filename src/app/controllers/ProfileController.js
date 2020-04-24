@@ -9,7 +9,6 @@ import FormatDataLocal from '../util/formatDataLocal';
 class ProfileController {
   async update(req, res) {
 
-    console.log('req.userId', req.userId)
     const { name, email, phone, oldPassword, password } = req.body.data;
     const { prefix, number } = phone;
 

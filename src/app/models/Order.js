@@ -120,12 +120,6 @@ class Order extends Model {
               new Date(dateToCompare)
             );
 
-            console.log('Hora init:', horaStart);
-            console.log('horaEnd:', horaEnd);
-            console.log('new Date(compDateStart)', new Date(compDateStart));
-            console.log('new Date(compDateEnd):', new Date(compDateEnd));
-            console.log('new Date(dateToCompare):', new Date(dateToCompare));
-
             let withdrawProduct = false;
 
             if (horaStart === true && horaEnd === true) {

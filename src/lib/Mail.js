@@ -40,7 +40,6 @@ class Mail {
   }
 
   sendMail(message) {
-    console.log('message::', message);
     return this.transporter.sendMail({
       ...mailConfigSESAWS.aws.ses.from.default,
       ...message,

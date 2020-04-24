@@ -8,7 +8,7 @@ class TokenController {
   //retorno para o select
   async index(req, res) {
     const { email } = req.query;
-    console.log('req.queryreq.queryreq.query:: ', req.query);
+
     const userExists = await User.findOne({
       attributes: ['id', 'person_id'],
       include: [
@@ -35,7 +35,7 @@ class TokenController {
     });
 
     // Make sure the user has been verified
-    console.log('===>>>tokenExiststokenExists: ', tokenExists);
+    
     if (!tokenExists) {
       return res.status(401).json({
         error: 'Esse token não existe, crie um novo token!',
