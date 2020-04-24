@@ -60,7 +60,6 @@ class DeliveryManController {
       password,
     } = req.body;
 
-    console.log('req.body:::', req.body)
     const personExists = await Person.findOne({ where: { email } });
 
     if (personExists) {

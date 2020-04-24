@@ -5,8 +5,6 @@ import Group from '../models/Group';
 class IndexGroupIDUserService {
   async run({ userId }) {
 
-    console.log('userID:', userId);
-
     const group_users = await GroupUser.findAll({
       where: { user_id: userId },
       attributes: ['id'],
@@ -18,9 +16,6 @@ class IndexGroupIDUserService {
         },
       ],
     });
-
-    console.log('group_users:', group_users);
-
 
     return group_users;
   }
