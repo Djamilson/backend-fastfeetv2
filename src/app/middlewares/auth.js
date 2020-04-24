@@ -6,10 +6,6 @@ import authConfig from '../../config/auth';
 export default async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
-  console.log('==================');
-  console.log('=>>>', authHeader);
-  console.log('==================');
-
   if (!authHeader) {
     return res.status(401).json({ error: 'Token not provided Opss' });
   }
