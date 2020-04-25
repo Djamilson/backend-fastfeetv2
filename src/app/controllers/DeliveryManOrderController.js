@@ -21,6 +21,8 @@ import FormatDataLocal from '../util/formatDataLocal';
 import ByOrderIdSemDeliverymanService from '../services/ByOrderIdSemDeliverymanService';
 import Cache from '../../lib/Cache';
 
+import CompareHour from '../util/compareHour';
+
 class DeliveryManOrderController {
   async index(req, res) {
     const { id } = req.params;
@@ -102,6 +104,7 @@ class DeliveryManOrderController {
 
   async store(req, res) {
     const { id } = req.params;
+
     const { deliveryman_id } = req.body;
 
     const orderExist = await Order.findByPk(id);
@@ -121,6 +124,18 @@ class DeliveryManOrderController {
      *Sendo assim ele pode ficar com mais de 5 encomendas em mão sem que as mesmas
      *possam se entregues. Todavia, só pode ser retirada por dia são 5 unidades.
      **/
+
+    /**
+     * faz ferificação do horário
+     */
+
+    const compareHour = CompareHour.run();
+
+    if (compareHour) {
+      return res
+        .status(404)
+        .json({ error: 'Product pick-up time is between 8am and 6pm' });
+    }
 
     const newDate = new Date();
 
