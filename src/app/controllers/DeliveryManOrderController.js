@@ -126,12 +126,12 @@ class DeliveryManOrderController {
      **/
 
     /**
-     * faz ferificação do horário
+     * faz verificação do horário
      */
 
     const compareHour = CompareHour.run();
 
-    if (compareHour) {
+    if (!compareHour) {
       return res
         .status(404)
         .json({ error: 'Product pick-up time is between 8am and 6pm' });
