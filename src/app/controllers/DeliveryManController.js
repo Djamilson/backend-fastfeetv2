@@ -11,6 +11,8 @@ import CreateFileService from '../services/CreateFileService';
 import UpdateFileService from '../services/UpdateFileService';
 import IndexDeliverymanService from '../services/IndexDeliverymanService';
 
+import removerNameDiretorio from '../util/removerNameDiretorio';
+
 class DeliveryManController {
   async index(req, res) {
     const { page, limit, q } = req.query;
@@ -37,14 +39,15 @@ class DeliveryManController {
   }
 
   async store(req, res) {
+    
+    const { originalname: name } = req.file;
     const {
-      originalname: name,
       filename: path,
       key,
       destination,
-      location,
+      Location: location,
       path: filePath,
-    } = req.file;
+    } = req.file.original;
 
     const {
       name: namePerson,
@@ -60,15 +63,19 @@ class DeliveryManController {
       password,
     } = req.body;
 
+    console.log('Chegue ===::', req.body);
     const personExists = await Person.findOne({ where: { email } });
 
     if (personExists) {
       return res.status(401).json({ error: 'User already exists.' });
     }
+    console.log('personExists 1');
 
     const groupExists = await Group.findOne({
       where: { name: 'role-entregador' },
     });
+
+    console.log('personExists 2');
 
     if (!groupExists) {
       return res
@@ -76,19 +83,26 @@ class DeliveryManController {
         .json({ error: 'Não foi possível encontrar o grupo para associar.' });
     }
 
+    console.log('personExists 3');
+
     const phoneExists = await Phone.findOne({
       where: { prefix, number: numberPhone },
       attributes: ['id', 'prefix', 'number'],
     });
 
+    console.log('phoneExists 4', phoneExists);
+
     if (phoneExists) {
       return res.status(402).json({ error: 'Phone already exists.' });
     }
 
+    const newKey = removerNameDiretorio(key);
+    console.log('key', key);
+    console.log('newKey', newKey);
     const newFile = await CreateFileService.run({
       name,
       path,
-      key,
+      key: newKey,
       destination,
       location,
       filePath,
@@ -149,7 +163,6 @@ class DeliveryManController {
       numberPhone,
       file,
       id_file,
-
       street,
       number,
       complement,
@@ -227,23 +240,26 @@ class DeliveryManController {
      */
 
     if (file != '') {
+      const { originalname: name } = req.file;
       const {
-        originalname: name,
         filename: path,
         key,
         destination,
-        location,
+        Location: location,
         path: filePath,
-      } = req.file;
+      } = req.file.original;
+
+      const newPath = removerNameDiretorio(key);
 
       await UpdateFileService.run({
         id_file,
         name,
         path,
-        key,
+        key: newPath,
         destination,
         location,
         filePath,
+        file: req.file,
       });
     }
 
