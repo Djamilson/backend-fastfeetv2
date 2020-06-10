@@ -3,6 +3,8 @@ import { parseISO, format, addHours } from 'date-fns';
 
 import Order from '../models/Order';
 
+import removerNameDiretorio from '../util/removerNameDiretorio';
+
 import CreateFileService from '../services/CreateFileService';
 import FormatDataLocal from '../util/formatDataLocal';
 import Cache from '../../lib/Cache';
@@ -44,16 +46,8 @@ class OrderSuccessController {
   }
 
   async update(req, res) {
-    const {
-      originalname: name,
-      filename: path,
-      key,
-      destination,
-      location,
-      path: filePath,
-    } = req.file;
-
     const { id } = req.params;
+    const { userId } = req;
 
     const order = await Order.findByPk(id);
 
@@ -72,10 +66,21 @@ class OrderSuccessController {
     const parsedDate = parseISO(date);
     const end_date = addHours(parsedDate, 3);
 
+    const { originalname: name } = req.file;
+    const {
+      filename: path,
+      key,
+      destination,
+      Location: location,
+      path: filePath,
+    } = req.file.original;
+
+    const newPath = removerNameDiretorio(key);
+
     const newFile = await CreateFileService.run({
       name,
       path,
-      key,
+      key: newPath,
       destination,
       location,
       filePath,
