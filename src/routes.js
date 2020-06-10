@@ -14,6 +14,7 @@ import SearchDeliverymanController from './app/controllers/SearchDeliverymanCont
 
 import PeopleController from './app/controllers/PeopleController';
 import UserController from './app/controllers/UserController';
+import FileMobileController from './app/controllers/FileMobileController';
 
 import DeliveryProblemController from './app/controllers/DeliveryProblemController';
 import ProblemController from './app/controllers/ProblemController';
@@ -227,6 +228,7 @@ routes.post('/files', upload.single('file'), FileController.store);
 routes.put('/avatar/:avatar_id', UserAvatarUpdateController.update);
 
 //atualiza foto do perfil no mobil
-routes.put('/files/:id', upload.single('file'), FileController.update);
+routes.post('/files/mobile', upload.single('file'), FileMobileController.store);
+routes.put('/files/:id', upload.single('file'), FileMobileController.update);
 
 export default routes;

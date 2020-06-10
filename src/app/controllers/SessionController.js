@@ -10,12 +10,10 @@ import File from '../models/File';
 
 import authConfig from '../../config/auth';
 
-import FormatDataLocal from '../util/formatDataLocal';
-
 class SessionController {
   async store(req, res) {
     const { email, password } = req.body;
-   
+
     const user = await User.findOne({
       attributes: [
         'id',
@@ -91,18 +89,7 @@ class SessionController {
       deliverymanId = deliveryman.id;
     }
 
-    const {
-      id,
-      person,
-      is_verified,
-      last_login_at,
-      person_id,
-      created_at,
-    } = user;
-
-    const date_ = await FormatDataLocal.subHours_time({
-      date_at: created_at,
-    });
+    const { id, person, is_verified, last_login_at, created_at } = user;
 
     return res.json({
       user: {
@@ -111,7 +98,7 @@ class SessionController {
         is_verified,
         group_users,
         last_login_at,
-        created_at: date_,
+        created_at,
         deliverymanId,
       },
       token: jwt.sign({ id }, authConfig.secret, {
